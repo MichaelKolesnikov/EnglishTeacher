@@ -1,0 +1,15 @@
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  script:
+    - mkdir -p /home/gitlab-runner/bica-project
+    - cd /home/gitlab-runner/bica-project
+    - if [ ! -d ".git" ]; then git clone git@gitlab.com:asp6062014/bica.git .; fi
+    - git stash && git checkout main && git pull origin main
+    - chmod +x deploy.sh 
+    - sudo apt install python3-venv -y
+    - ./deploy.sh
+  only:
+    - main

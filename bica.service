@@ -1,0 +1,25 @@
+[Unit]
+Description=Backend for bica-model
+
+Requires=nginx.service
+After=nginx.service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/gitlab-runner/bica-project/
+
+User=gitlab-runner
+Group=gitlab-runner
+
+OOMScoreAdjust=-250
+
+ExecStart=/bin/bash -c 'cd /home/gitlab-runner/bica-project \
+    && source ./.bica/bin/activate && \
+    mkdir -p logs_dummy && mkdir -p logs_moral && \
+    cd ./src && python3 ./bica_server.py'
+
+Restart=always
+TimeoutSec=120
+
+[Install]
+WantedBy=multi-user.target

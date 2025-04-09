@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>server.base_moral_scheme &#8212; документация BICA project </title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../_static/documentation_options.js?v=372fde1a"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/translations.js?v=5b699b7f"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Исходный код server.base_moral_scheme</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.oai_interface</span><span class="w"> </span><span class="kn">import</span> <span class="n">Interface</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+
+<div class="viewcode-block" id="BaseMoralScheme">
+<a class="viewcode-back" href="../../server.html#server.base_moral_scheme.BaseMoralScheme">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">BaseMoralScheme</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> 
+        <span class="n">base_intentions</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> 
+        <span class="n">changed_message</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+        <span class="n">appraisals</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+        <span class="n">feelings</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Базовая моральная схема.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            base_intentions (np.ndarray): Базисные векторы семантического пространства.</span>
+<span class="sd">            changed_message (Optional[str]): Начальный prompt (по умолчанию None).</span>
+<span class="sd">            appraisals (Optional[np.ndarray]): Вектор оценок (если не задан, заполняется нулями).</span>
+<span class="sd">            feelings (Optional[np.ndarray]): Вектор чувств (если не задан, заполняется 0.5).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_intentions</span> <span class="o">=</span> <span class="n">base_intentions</span>
+
+        <span class="c1"># размер семантического пространства</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">space_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">base_intentions</span><span class="p">)</span>
+
+        <span class="c1"># константы для формул</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p_const</span> <span class="o">=</span> <span class="mf">0.03</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r_const</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">appraisals_state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">space_size</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feelings_state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">space_size</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
+        <span class="c1"># Интерфейс для взаимодействия в openAI через прокси</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">oai_interface</span> <span class="o">=</span> <span class="n">Interface</span><span class="p">()</span>
+
+        <span class="c1"># векторы appraisals и feelings</span>
+        <span class="k">if</span> <span class="n">appraisals</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">appraisals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">space_size</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">appraisals</span> <span class="o">=</span> <span class="n">appraisals</span>
+        
+        <span class="k">if</span> <span class="n">feelings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feelings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">space_size</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feelings</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feelings</span> <span class="o">=</span> <span class="n">feelings</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">appraisals</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">space_size</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span> 
+            <span class="k">if</span> <span class="n">appraisals</span> <span class="ow">is</span> <span class="kc">None</span> 
+            <span class="k">else</span> <span class="n">appraisals</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">feelings</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">space_size</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span> 
+            <span class="k">if</span> <span class="n">feelings</span> <span class="ow">is</span> <span class="kc">None</span> 
+            <span class="k">else</span> <span class="n">feelings</span>
+        <span class="p">)</span>
+
+
+<div class="viewcode-block" id="BaseMoralScheme.euc_dist">
+<a class="viewcode-back" href="../../server.html#server.base_moral_scheme.BaseMoralScheme.euc_dist">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">euc_dist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Вычисляет расстояние между двумя векторами. Пока используем евклидову метрику</span>
+<span class="sd">        Далее, возможно, надо сделать параметр настраиваемым для использования других </span>
+<span class="sd">        метрик</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            a (np.ndarray): Первый вектор.</span>
+<span class="sd">            b (np.ndarray): Второй вектор.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Евклидово расстояние между векторами.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: Если векторы имеют разную длину.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Векторы должны иметь одинаковую длину&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="BaseMoralScheme.get_base_intentions">
+<a class="viewcode-back" href="../../server.html#server.base_moral_scheme.BaseMoralScheme.get_base_intentions">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_base_intentions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Возвращает базовые векторы пространства.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_intentions</span> </div>
+
+
+<div class="viewcode-block" id="BaseMoralScheme.update_vectors">
+<a class="viewcode-back" href="../../server.html#server.base_moral_scheme.BaseMoralScheme.update_vectors">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_vectors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Обновляет векторы оценок (appraisals) и чувств (feelings) </span>
+<span class="sd">        на основе действия (action).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            action (np.ndarray): Вектор изменений, влияющий на оценки.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">appraisals</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_const</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">appraisals</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_const</span> <span class="o">*</span> <span class="n">action</span>
+        <span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">feelings</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">p_const</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">feelings</span> 
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">p_const</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">appraisals</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">feelings</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">mid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">space_size</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">appraisals_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">appraisals</span><span class="p">[:</span><span class="n">mid</span><span class="p">]</span> <span class="o">-</span>  <span class="bp">self</span><span class="o">.</span><span class="n">appraisals</span><span class="p">[</span><span class="n">mid</span><span class="p">:]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feelings_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feelings</span><span class="p">[:</span><span class="n">mid</span><span class="p">]</span> <span class="o">-</span>  <span class="bp">self</span><span class="o">.</span><span class="n">feelings</span><span class="p">[</span><span class="n">mid</span><span class="p">:]</span></div>
+
+
+<div class="viewcode-block" id="BaseMoralScheme.get_appraisals">
+<a class="viewcode-back" href="../../server.html#server.base_moral_scheme.BaseMoralScheme.get_appraisals">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_appraisals</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Возвращает вектор оценок.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">appraisals</span></div>
+
+
+<div class="viewcode-block" id="BaseMoralScheme.get_feelings">
+<a class="viewcode-back" href="../../server.html#server.base_moral_scheme.BaseMoralScheme.get_feelings">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_feelings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Возвращает вектор оценок.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feelings</span></div>
+
+
+<div class="viewcode-block" id="BaseMoralScheme.get_appraisals_state">
+<a class="viewcode-back" href="../../server.html#server.base_moral_scheme.BaseMoralScheme.get_appraisals_state">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_appraisals_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Возвращает текущее состояние оценок.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">appraisals_state</span></div>
+
+
+<div class="viewcode-block" id="BaseMoralScheme.get_feelings_state">
+<a class="viewcode-back" href="../../server.html#server.base_moral_scheme.BaseMoralScheme.get_feelings_state">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_feelings_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Возвращает текущее состояние чувств.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feelings_state</span></div>
+</div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">BICA project</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Навигация</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">server</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Код модуля</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Anatolii Dolgikh.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

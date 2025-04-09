@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>server package &#8212; документация BICA project </title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=372fde1a"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=5b699b7f"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="prev" title="server" href="modules.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="server-package">
+<h1>server package<a class="headerlink" href="#server-package" title="Ссылка на этот заголовок">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Ссылка на этот заголовок">¶</a></h2>
+</section>
+<section id="module-server.base_moral_scheme">
+<span id="server-base-moral-scheme-module"></span><h2>server.base_moral_scheme module<a class="headerlink" href="#module-server.base_moral_scheme" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="server.base_moral_scheme.BaseMoralScheme">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">server.base_moral_scheme.</span></span><span class="sig-name descname"><span class="pre">BaseMoralScheme</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_intentions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">changed_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">appraisals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feelings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/base_moral_scheme.html#BaseMoralScheme"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.base_moral_scheme.BaseMoralScheme" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="server.base_moral_scheme.BaseMoralScheme.euc_dist">
+<span class="sig-name descname"><span class="pre">euc_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/base_moral_scheme.html#BaseMoralScheme.euc_dist"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.base_moral_scheme.BaseMoralScheme.euc_dist" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Вычисляет расстояние между двумя векторами. Пока используем евклидову метрику
+Далее, возможно, надо сделать параметр настраиваемым для использования других
+метрик</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>np.ndarray</em>) – Первый вектор.</p></li>
+<li><p><strong>b</strong> (<em>np.ndarray</em>) – Второй вектор.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Евклидово расстояние между векторами.</p>
+</dd>
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Исключение<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – Если векторы имеют разную длину.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="server.base_moral_scheme.BaseMoralScheme.get_appraisals">
+<span class="sig-name descname"><span class="pre">get_appraisals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/base_moral_scheme.html#BaseMoralScheme.get_appraisals"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.base_moral_scheme.BaseMoralScheme.get_appraisals" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Возвращает вектор оценок.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="server.base_moral_scheme.BaseMoralScheme.get_appraisals_state">
+<span class="sig-name descname"><span class="pre">get_appraisals_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/base_moral_scheme.html#BaseMoralScheme.get_appraisals_state"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.base_moral_scheme.BaseMoralScheme.get_appraisals_state" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Возвращает текущее состояние оценок.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="server.base_moral_scheme.BaseMoralScheme.get_base_intentions">
+<span class="sig-name descname"><span class="pre">get_base_intentions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/base_moral_scheme.html#BaseMoralScheme.get_base_intentions"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.base_moral_scheme.BaseMoralScheme.get_base_intentions" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Возвращает базовые векторы пространства.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="server.base_moral_scheme.BaseMoralScheme.get_feelings">
+<span class="sig-name descname"><span class="pre">get_feelings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/base_moral_scheme.html#BaseMoralScheme.get_feelings"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.base_moral_scheme.BaseMoralScheme.get_feelings" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Возвращает вектор оценок.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="server.base_moral_scheme.BaseMoralScheme.get_feelings_state">
+<span class="sig-name descname"><span class="pre">get_feelings_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/base_moral_scheme.html#BaseMoralScheme.get_feelings_state"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.base_moral_scheme.BaseMoralScheme.get_feelings_state" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Возвращает текущее состояние чувств.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="server.base_moral_scheme.BaseMoralScheme.update_vectors">
+<span class="sig-name descname"><span class="pre">update_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/base_moral_scheme.html#BaseMoralScheme.update_vectors"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.base_moral_scheme.BaseMoralScheme.update_vectors" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Обновляет векторы оценок (appraisals) и чувств (feelings)
+на основе действия (action).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>action</strong> (<em>np.ndarray</em>) – Вектор изменений, влияющий на оценки.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-server.helper">
+<span id="server-helper-module"></span><h2>server.helper module<a class="headerlink" href="#module-server.helper" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="server.helper.load_config">
+<span class="sig-prename descclassname"><span class="pre">server.helper.</span></span><span class="sig-name descname"><span class="pre">load_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/helper.html#load_config"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.helper.load_config" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-server.oai_interface">
+<span id="server-oai-interface-module"></span><h2>server.oai_interface module<a class="headerlink" href="#module-server.oai_interface" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="server.oai_interface.Interface">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">server.oai_interface.</span></span><span class="sig-name descname"><span class="pre">Interface</span></span><a class="reference internal" href="_modules/server/oai_interface.html#Interface"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.oai_interface.Interface" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="server.oai_interface.Interface.clear_intetions">
+<span class="sig-name descname"><span class="pre">clear_intetions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reply</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/oai_interface.html#Interface.clear_intetions"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.oai_interface.Interface.clear_intetions" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="server.oai_interface.Interface.get_brain_status">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_brain_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">messages</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_scheme</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/oai_interface.html#Interface.get_brain_status"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.oai_interface.Interface.get_brain_status" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="server.oai_interface.Interface.get_composition">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_composition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intents_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fraze</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/oai_interface.html#Interface.get_composition"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.oai_interface.Interface.get_composition" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="server.oai_interface.Interface.get_dummy_replic">
+<span class="sig-name descname"><span class="pre">get_dummy_replic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">messages</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/oai_interface.html#Interface.get_dummy_replic"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.oai_interface.Interface.get_dummy_replic" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="server.oai_interface.Interface.get_replic">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_replic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">last_message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">messages</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intens_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feelings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prev_scheme</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_scheme</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/oai_interface.html#Interface.get_replic"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.oai_interface.Interface.get_replic" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-server.request_contracts">
+<span id="server-request-contracts-module"></span><h2>server.request_contracts module<a class="headerlink" href="#module-server.request_contracts" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="server.request_contracts.EmotionItem">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">server.request_contracts.</span></span><span class="sig-name descname"><span class="pre">EmotionItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/request_contracts.html#EmotionItem"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.request_contracts.EmotionItem" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="server.request_contracts.EmotionItem.direction">
+<span class="sig-name descname"><span class="pre">direction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#server.request_contracts.EmotionItem.direction" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="server.request_contracts.EmotionItem.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#server.request_contracts.EmotionItem.model_config" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="server.request_contracts.TextItem">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">server.request_contracts.</span></span><span class="sig-name descname"><span class="pre">TextItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/request_contracts.html#TextItem"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.request_contracts.TextItem" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="server.request_contracts.TextItem.direction">
+<span class="sig-name descname"><span class="pre">direction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#server.request_contracts.TextItem.direction" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="server.request_contracts.TextItem.input">
+<span class="sig-name descname"><span class="pre">input</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> <span class="pre">|</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></em><a class="headerlink" href="#server.request_contracts.TextItem.input" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="server.request_contracts.TextItem.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#server.request_contracts.TextItem.model_config" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-server.serv">
+<span id="server-serv-module"></span><h2>server.serv module<a class="headerlink" href="#module-server.serv" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="server.serv.process_root">
+<span class="sig-prename descclassname"><span class="pre">server.serv.</span></span><span class="sig-name descname"><span class="pre">process_root</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/serv.html#process_root"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.serv.process_root" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-server.test_client">
+<span id="server-test-client-module"></span><h2>server.test_client module<a class="headerlink" href="#module-server.test_client" title="Ссылка на этот заголовок">¶</a></h2>
+</section>
+<section id="module-server.virtual_tutor">
+<span id="server-virtual-tutor-module"></span><h2>server.virtual_tutor module<a class="headerlink" href="#module-server.virtual_tutor" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="server.virtual_tutor.DummyVirtualTutor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">server.virtual_tutor.</span></span><span class="sig-name descname"><span class="pre">DummyVirtualTutor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/virtual_tutor.html#DummyVirtualTutor"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.virtual_tutor.DummyVirtualTutor" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="server.virtual_tutor.DummyVirtualTutor.generate_answer">
+<span class="sig-name descname"><span class="pre">generate_answer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">replic</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/virtual_tutor.html#DummyVirtualTutor.generate_answer"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.virtual_tutor.DummyVirtualTutor.generate_answer" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="server.virtual_tutor.VirtualTutor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">server.virtual_tutor.</span></span><span class="sig-name descname"><span class="pre">VirtualTutor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/virtual_tutor.html#VirtualTutor"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.virtual_tutor.VirtualTutor" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="server.virtual_tutor.VirtualTutor.generate_answer">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_answer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">replic</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/virtual_tutor.html#VirtualTutor.generate_answer"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.virtual_tutor.VirtualTutor.generate_answer" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server.virtual_tutor.create_logger">
+<span class="sig-prename descclassname"><span class="pre">server.virtual_tutor.</span></span><span class="sig-name descname"><span class="pre">create_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/server/virtual_tutor.html#create_logger"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#server.virtual_tutor.create_logger" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-server">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-server" title="Ссылка на этот заголовок">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">BICA project</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Навигация</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">server</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">server package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">server</a><ul>
+      <li>Previous: <a href="modules.html" title="предыдущая глава">server</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Anatolii Dolgikh.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/server.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
