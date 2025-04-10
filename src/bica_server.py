@@ -6,11 +6,11 @@ import uvicorn
 import json
 import argparse
 
-from src.ConnectionManager import ConnectionManager
-from src.PostItem import PostItem
-from src.StaticFilesWithoutCaching import StaticFilesWithoutCaching
-from src.VizItem import VizItem
-from src.WssItem import WssItem
+from ConnectionManager import ConnectionManager
+from PostItem import PostItem
+from StaticFilesWithoutCaching import StaticFilesWithoutCaching
+from VizItem import VizItem
+from WssItem import WssItem
 
 vt_list = {}
 
@@ -38,7 +38,7 @@ async def process_post_viz1(item: VizItem):
 manager = ConnectionManager()
 
 
-@app.websocket("/test_1/wss/{client_id}")
+@app.websocket("/wss/{client_id}")
 async def websocket_endpoint_3(websocket: WebSocket, client_id: int):
     await manager.connect(websocket)
     try:

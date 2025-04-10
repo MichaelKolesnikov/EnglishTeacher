@@ -1,6 +1,6 @@
 const client_id = Date.now();
 
-let web_socket = new WebSocket(`ws://myddnslol.ddns.net:8000/test_1/wss/${client_id}`);
+let web_socket = new WebSocket(`ws://myddnslol.ddns.net:8000/wss/${client_id}`);
 
 web_socket.onopen = () => {
     console.log('WebSocket Connection established');
