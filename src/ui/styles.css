@@ -8,40 +8,41 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  padding: 20px;
+  padding: 0;
   background: var(--light);
   color: var(--primary);
+  height: 100vh;
 }
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  gap: 20px;
-  height: 90vh;
-  padding: 20px;
+  grid-template-columns: 1fr;
+  height: 100vh;
+  padding: 0;
 }
 
 .dialog-container {
-  grid-column: 3;
-  grid-row: 1 / -1;
+  grid-column: 1;
+  grid-row: 1;
   background: white;
-  border-radius: 10px;
+  border-radius: 0;
   padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  height: 100vh;
+  box-sizing: border-box;
 }
 
 .chat-messages {
   flex-grow: 1;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin-bottom: 10px;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   background: #f9f9f9;
+  min-height: 60vh;
 }
 
 .message {

@@ -1,29 +1,16 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel, TypeAdapter
+from pydantic import TypeAdapter
 from pydantic.tools import parse_obj_as
 from server.virtual_tutor import VirtualTutor, DummyVirtualTutor
 import uvicorn
 import json
 import argparse
 
-
-# убираем кэширование файлов, а то плохо выходит
-class StaticFilesWithoutCaching(StaticFiles):
-    def is_not_modified(self, *args, **kwargs) -> bool:
-        return False
-
-
-class WssItem(BaseModel):
-    type: str
-    content: str
-    timestamp: str
-
-
-class PostItem(BaseModel):
-    input: str | None = None
-    direction: str | None = None
-
+from src.ConnectionManager import ConnectionManager
+from src.PostItem import PostItem
+from src.StaticFilesWithoutCaching import StaticFilesWithoutCaching
+from src.VizItem import VizItem
+from src.WssItem import WssItem
 
 vt_list = {}
 
@@ -32,10 +19,6 @@ with open("server/prompts/start_prompt.md") as f:
     start_prompt = f.read()
 
 viz_vt = DummyVirtualTutor(236, start_prompt)
-
-
-class VizItem(BaseModel):
-    input_text: str
 
 
 @app.get("/")
@@ -50,22 +33,6 @@ async def process_post_viz1(item: VizItem):
     viz_vt.logger_dialog.info(f"Tutor (viz): {answer}")
     return {"answer_text": answer,
             "emotion": 3}
-
-
-class ConnectionManager:
-    def __init__(self):
-        self.active_connections: list[WebSocket] = []
-
-    async def connect(self, websocket: WebSocket):
-        await websocket.accept()
-        self.active_connections.append(websocket)
-
-    def disconnect(self, websocket: WebSocket):
-        self.active_connections.remove(websocket)
-
-    @staticmethod
-    async def send_personal_message(message: dict, websocket: WebSocket):
-        await websocket.send_json(message)
 
 
 manager = ConnectionManager()
@@ -110,7 +77,7 @@ async def process_post(client_id: int, item: PostItem):
     }
 
 
-app.mount("/test_1", StaticFilesWithoutCaching(directory="./ui_moral_1", html=True), name="static")
+app.mount("/english-teacher", StaticFilesWithoutCaching(directory="./ui", html=True), name="static")
 
 
 def main():
