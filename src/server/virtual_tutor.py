@@ -1,11 +1,11 @@
 import numpy as np
-from . import helper as hlp, spaces_and_feelings
+from . import spaces_and_feelings
 
 import logging
 from pathlib import Path
 import os
 from .base_moral_scheme import BaseMoralScheme
-from .oai_interface import OpenAIInterface
+from .OpenAIInterface import OpenAIInterface
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -33,14 +33,8 @@ class DummyVirtualTutor:
             f"logs_dummy/{self.client_id}",
             "dialog.log"
         )
-        self.logger_essay = create_logger(
-            f"essay_logger_{self.client_id}",
-            f"logs_dummy/{self.client_id}",
-            "essay.log"
-        )
 
         self.logger_dialog.info("This is dialog log")
-        self.logger_essay.info("This is essay log")
 
     async def generate_answer(self, replica):
         self.messages.append({"role": "user", "content": replica})
@@ -56,20 +50,14 @@ class VirtualTutor:
             f"logs_moral/{self.client_id}",
             "dialog.log"
         )
-        self.logger_essay = create_logger(
-            f"essay_logger_{self.client_id}",
-            f"logs_moral/{self.client_id}",
-            "essay.log"
-        )
 
         self.logger_dialog.info("This is dialog log")
-        self.logger_essay.info("This is essay log")
 
         # список моральных схем
         self.ms_list = [
-            BaseMoralScheme(spaces_and_feelings.first_space, hlp.from1to2, feelings=spaces_and_feelings.feelings1),
-            BaseMoralScheme(spaces_and_feelings.second_space, hlp.from2to3, feelings=spaces_and_feelings.feelings2),
-            BaseMoralScheme(spaces_and_feelings.third_space, hlp.from3to4, feelings=spaces_and_feelings.feelings3),
+            BaseMoralScheme(spaces_and_feelings.first_space, spaces_and_feelings.from1to2, feelings=spaces_and_feelings.feelings1),
+            BaseMoralScheme(spaces_and_feelings.second_space, spaces_and_feelings.from2to3, feelings=spaces_and_feelings.feelings2),
+            BaseMoralScheme(spaces_and_feelings.third_space, spaces_and_feelings.from3to4, feelings=spaces_and_feelings.feelings3),
             BaseMoralScheme(spaces_and_feelings.fourth_space, feelings=spaces_and_feelings.feelings4)
         ]
 
@@ -86,7 +74,7 @@ class VirtualTutor:
 
         intents = self.ms_list[self.cur_moral_id].get_base_intentions()
         self.logger_dialog.warning(f"intents: {intents}")
-        print(intents)
+        print(f"Intents:\n{intents}")
         action = await self.ms_list[self.cur_moral_id].oai_interface.get_composition(intents, replica)
         print(f"action:{action}")
         self.logger_dialog.warning(f"action: {action}")
@@ -134,7 +122,7 @@ class VirtualTutor:
             self.prev_moral_id,
             self.cur_moral_id
         )
-        print(reply)
+        print(f"reply:\n{reply}")
         self.messages.append({"role": "user", "content": replica})  # обновляем историю диалога
         self.messages.append({"role": "assistant", "content": reply})  # обновляем историю диалога
         return reply

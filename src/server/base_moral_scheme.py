@@ -1,6 +1,6 @@
 import numpy
 import numpy as np
-from .oai_interface import OpenAIInterface
+from .OpenAIInterface import OpenAIInterface
 from typing import Optional
 
 
@@ -21,7 +21,7 @@ class BaseMoralScheme:
             appraisals (Optional[np.ndarray]): Вектор оценок (если не задан, заполняется нулями).
             feelings (Optional[np.ndarray]): Вектор чувств (если не задан, заполняется 0.5).
         """
-        print(changed_message)
+        print(f"changed_message:\n{changed_message}")
         self.base_intentions = base_intentions
 
         # размер семантического пространства

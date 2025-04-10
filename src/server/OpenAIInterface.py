@@ -6,7 +6,7 @@ import asyncio
 from dotenv import load_dotenv
 from typing import List, Dict, Optional
 
-from . import helper as hlp
+from . import spaces_and_feelings
 
 load_dotenv()
 proxy_token = os.getenv("PROXY_TOKEN")
@@ -124,14 +124,13 @@ class OpenAIInterface:
             '''
 
         if current_scheme - prev_scheme == 1 and current_scheme == 2:
-            changed_message = changed_message + hlp.from1to2
+            changed_message = changed_message + spaces_and_feelings.from1to2
         elif current_scheme - prev_scheme == 2 and current_scheme == 3:
-            changed_message = changed_message + hlp.from2to3
+            changed_message = changed_message + spaces_and_feelings.from2to3
         elif current_scheme - prev_scheme == 3 and current_scheme == 4:
-            changed_message = changed_message + hlp.from3to4
+            changed_message = changed_message + spaces_and_feelings.from3to4
         elif current_scheme == prev_scheme:
-            changed_message = changed_message + \
-                              f"Вы находитесь на {current_scheme + 1} этапе. Переходить пока не нужно"
+            changed_message = changed_message + f"Вы находитесь на {current_scheme + 1} этапе. Переходить пока не нужно"
 
         messages_opt = list(messages)
         messages_opt.append({"role": "user", "content": changed_message})
@@ -177,34 +176,13 @@ class OpenAIInterface:
             return f"Непредвиденная ошибка"
 
     async def get_brain_status(self, messages, last_message, current_scheme):
-        if current_scheme == 0:
-            changed_message = f'''Последняя реплика человека:{last_message}.
-            Сейчас ты находишься на первом этапе диалога. Вы общаетесь со студентом и 
-            условие перехода на следующий этап - получено формальное согласие студента начать 
-            занятие.
-            Оцени по последнему сообщению было ли получено это  согласие. В ответе выведи только 
-            "да" или "нет" в зависимости от выполнения условия
-            '''
-
-        elif current_scheme == 1:
-            changed_message = f'''Последняя реплика человека:{last_message}.
-            Сейчас ты находишься на втором этапе. Сейчас вы работаете на написанием outline. 
-            Проверь по последнему сообщению - является ли оно написанным студентом outline.
-            Исключение: если последнее сообщение все-таки является написанным outline, но 
-            сильно не соответствует каким-то критериям , то ответ должен быть "нет"
-           В ответе выведи только "да" или "нет" в зависимости от выполнения условия
-            '''
-
-        elif current_scheme == 2:
-            changed_message = f'''Последняя реплика человека:{last_message}.
-            Сейчас ты находишься на третьем этапе. Сейчас вы работаете над написанием самого эссе. 
-            Проверь по последнему сообщению и истории- написал ли студент эссе полностью, включая заключение?
-            Исключение: если последнее сообщение все-таки является полностью написанным эссе, но сильно не 
-            соответствует каким-то критериям , то ответ должен быть "нет"
-            В ответе выведи только "да" или "нет" в зависимости от выполнения условия
-            '''
-        else:
+        if not (0 <= current_scheme <= 2):
             return
+
+        prompt_path = os.path.join(os.path.dirname(__file__), 'prompts', f"scheme{current_scheme}_prompt.md")
+        with open(prompt_path, 'r', encoding='utf-8') as f:
+            changed_message = f"Последняя реплика человека:{last_message}.\n" + f.read()
+
         messages_opt = list(messages)
         messages_opt.append({"role": "user", "content": changed_message})
 

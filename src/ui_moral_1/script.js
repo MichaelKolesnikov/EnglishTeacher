@@ -1,7 +1,6 @@
-const client_id = Date.now()
+const client_id = Date.now();
 
-let web_socket = new WebSocket(`wss://bica-project.tw1.ru/test_1/wss/${client_id}`);
-// let web_socket = new WebSocket(`ws://bica-project.tw1.ru/test/ws/${client_id}`);
+let web_socket = new WebSocket(`ws://myddnslol.ddns.net:8000/test_1/wss/${client_id}`);
 
 web_socket.onopen = () => {
     console.log('WebSocket Connection established');
@@ -15,20 +14,22 @@ web_socket.onmessage = (event) => {
 };
 
 const dialogEditor = document.getElementById('dialogEditor');
-const essayEditor = document.getElementById('essayEditor');
 const chatMessages = document.getElementById('chatMessages');
 const typingIndicator = document.querySelector('.typing-indicator');
 
 function showTypingIndicator() {
+    console.log("showTypingIndicator");
     typingIndicator.style.display = 'block';
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
 function hideTypingIndicator() {
+    console.log("hideTypingIndicator");
     typingIndicator.style.display = 'none';
 }
 
 function addMessage(message, isUser = true) {
+    console.log("addMessage");
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${isUser ? 'user' : 'tutor'}`;
     messageDiv.textContent = message;
@@ -37,6 +38,7 @@ function addMessage(message, isUser = true) {
 }
 
 async function submitDialog() {
+    console.log("submitDialog");
     const message = dialogEditor.value;
     if (!message.trim()) return;
 
@@ -57,25 +59,6 @@ async function submitDialog() {
         hideTypingIndicator();
         console.error('Error submitting dialog:', error);
         alert('Error submitting dialog. Please try again.');
-    }
-}
-
-async function submitEssay() {
-    showTypingIndicator();
-    try {
-        if (web_socket.readyState === WebSocket.OPEN) {
-            const data_essay = {
-                type: 'essay',
-                content: essayEditor.value,
-                timestamp: new Date().toISOString()
-            };
-            web_socket.send(JSON.stringify(data_essay));
-            console.log(data_essay.content)
-        }
-    } catch (error) {
-        hideTypingIndicator();
-        console.error('Error submitting essay:', error);
-        alert('Error submitting essay. Please try again.');
     }
 }
 
